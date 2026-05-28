@@ -1,8 +1,12 @@
 import express from "express";
+import { db } from "./config/db.js";
 import servicesRoutes from './routes/servicesRoutes.js'
 
 //* Config
 const app = express();
+
+//* Connect to db
+db();
 
 //* Route
 app.use('/api/services', servicesRoutes)
