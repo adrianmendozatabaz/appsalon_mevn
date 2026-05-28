@@ -1,0 +1,12 @@
+{
+  "name": "appsalon_mevn_backend",
+  "version": "1.0.0",
+  "description": "Back para AppSalon en MENV",
+  "license": "ISC",
+  "author": "Adrian Mendoza",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
