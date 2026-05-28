@@ -4,7 +4,7 @@
   "description": "Back para AppSalon en MENV",
   "license": "ISC",
   "author": "Adrian Mendoza",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
