@@ -1,6 +1,10 @@
 import express from "express";
+import servicesRoutes from './routes/servicesRoutes.js';
+import dotenv from 'dotenv';
 import { db } from "./config/db.js";
-import servicesRoutes from './routes/servicesRoutes.js'
+
+//* Variables
+dotenv.config();
 
 //* Config
 const app = express();
