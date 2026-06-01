@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { services } from "../data/beautyServices.js";
 import Services from "../models/Services.js";
+import { validateObjectId } from "../utils/index.js";
 
 const createService = async (req, res) => {
   if (Object.values(req.body).includes("")) {
@@ -31,13 +32,7 @@ const getServicesById = async (req, res) => {
   const { id } = req.params;
 
   //* Validate object Id
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    const error = new Error("El ID no es valido.");
-
-    return res.status(400).json({
-      msg: error.message,
-    });
-  }
+  if (validateObjectId(id, res)) return;
 
   //* Validate if exists
   const service = await Services.findById(id);
@@ -58,13 +53,7 @@ const updateService = async (req, res) => {
   const { id } = req.params;
 
   //* Validate object Id
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    const error = new Error("El ID no es valido.");
-
-    return res.status(400).json({
-      msg: error.message,
-    });
-  }
+  if (validateObjectId(id, res)) return;
 
   //* Validate if exists
   const service = await Services.findById(id);
@@ -85,8 +74,8 @@ const updateService = async (req, res) => {
     await service.save();
 
     res.json({
-      msg: 'El servicio se actualizo de forma correcta.'
-    })
+      msg: "El servicio se actualizo de forma correcta.",
+    });
   } catch (error) {
     console.log(error);
   }
