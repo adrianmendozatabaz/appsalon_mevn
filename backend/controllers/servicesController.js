@@ -73,4 +73,34 @@ const updateService = async (req, res) => {
   }
 };
 
-export { createService, getServices, getServicesById, updateService };
+const deleteService = async (req, res) => {
+  const { id } = req.params;
+
+  //* Validate object Id
+  if (validateObjectId(id, res)) return;
+
+  //* Validate if exists
+  const service = await Services.findById(id);
+
+  if (!service) {
+    return handleNotFoundError("No se encontró el servicio solicitado.", res);
+  }
+
+  try {
+    await service.deleteOne();
+
+    res.json({
+      msg: "El servicio se elimino con éxito.",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  createService,
+  getServices,
+  getServicesById,
+  updateService,
+  deleteService,
+};
