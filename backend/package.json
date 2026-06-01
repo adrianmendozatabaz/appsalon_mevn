@@ -8,7 +8,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "watch": "nodemon index.js"
+    "watch": "nodemon index.js",
+    "seed:import": "node data/seed.js --import",
+    "seed:destroy": "node data/seed.js --destroy"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
