@@ -1,5 +1,6 @@
 <script setup>
 import SelectedService from '@/components/SelectedService.vue';
+import { formatCurrency } from '@/helpers';
 import { useAppointmentsStore } from '@/stores/appointments';
 
 const appointment = useAppointmentsStore();
@@ -14,4 +15,8 @@ const appointment = useAppointmentsStore();
     <div class="grid gap-5 mt-5">
         <SelectedService v-for="service in appointment.services" :key="service._id" :service="service" />
     </div>
+
+    <p class="text-right text-white text-2xl">Total a pagar:
+        <span class="font-black">{{ formatCurrency(appointment.totalAmount) }}</span>
+    </p>
 </template>
