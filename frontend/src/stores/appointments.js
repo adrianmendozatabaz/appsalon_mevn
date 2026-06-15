@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 
 export const useAppointmentsStore = defineStore("appointments", () => {
   const services = ref([]);
+  const date = ref('');
 
   function onServiceSelected(service) {
     if (
@@ -38,5 +39,6 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     services,
     noServicesSelected,
     totalAmount,
+    date
   };
 });
