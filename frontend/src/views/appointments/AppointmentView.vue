@@ -33,14 +33,17 @@ const formatter = ref({
         <h3 class="text-3xl font-extrabold text-white">Fecha y Hora</h3>
 
         <div class="lg:flex gap-5 items-start">
-            <div class="w-full lg:w-96 bg-white flex justify-center rounded-lg">
+            <div class="w-full flex-1 bg-white flex justify-center rounded-lg">
                 <VueTailwindDatepicker i18n="es-mx" as-single no-input v-model="appointment.date"
                     :formatter="formatter" />
             </div>
 
-            <div>
+            <div class="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-5 mt-10 lg:mt-0">
+                <button v-for="hour in appointment.hours"
+                    class="block text-blue-500 rounded-lg text-xl font-black p-3 bg-white">
+                    {{ hour }}
+                </button>
             </div>
         </div>
     </div>
-
 </template>
