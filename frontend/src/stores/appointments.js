@@ -5,6 +5,7 @@ export const useAppointmentsStore = defineStore("appointments", () => {
   const services = ref([]);
   const date = ref('');
   const hours = ref([]);
+  const time = ref('');
 
   onMounted(() => {
     const startHour = 10;
@@ -49,6 +50,7 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     noServicesSelected,
     totalAmount,
     date,
-    hours
+    hours,
+    time
   };
 });
