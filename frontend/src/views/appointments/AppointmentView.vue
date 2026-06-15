@@ -40,10 +40,18 @@ const formatter = ref({
 
             <div class="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-5 mt-10 lg:mt-0">
                 <button v-for="hour in appointment.hours"
-                    class="block text-blue-500 rounded-lg text-xl font-black p-3 bg-white">
+                    class="block text-blue-500 rounded-lg text-xl font-black p-3 cursor-pointer"
+                    :class="appointment.time === hour ? 'bg-blue-500 text-white' : 'bg-white'"
+                    @click="appointment.time = hour">
                     {{ hour }}
                 </button>
             </div>
+
+        </div>
+        <div class="flex justify-end">
+            <button class="w-full md:w-full-auto bg-blue-500 rounded-lg uppercase font-black text-white p-3">
+                Confirmar Reservación
+            </button>
         </div>
     </div>
 </template>
