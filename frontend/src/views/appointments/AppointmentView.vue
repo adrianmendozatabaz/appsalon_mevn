@@ -3,9 +3,14 @@ import VueTailwindDatepicker from 'vue-tailwind-datepicker';
 import SelectedService from '@/components/SelectedService.vue';
 import { formatCurrency } from '@/helpers';
 import { useAppointmentsStore } from '@/stores/appointments';
+import { ref } from 'vue';
 
 const appointment = useAppointmentsStore();
 
+const formatter = ref({
+    date: 'DD/MM/YYYY',
+    month: 'MMM'
+})
 </script>
 
 <template>
@@ -29,7 +34,8 @@ const appointment = useAppointmentsStore();
 
         <div class="lg:flex gap-5 items-start">
             <div class="w-full lg:w-96 bg-white flex justify-center rounded-lg">
-                <VueTailwindDatepicker i18n="es-mx" as-single no-input />
+                <VueTailwindDatepicker i18n="es-mx" as-single no-input v-model="appointment.date"
+                    :formatter="formatter" />
             </div>
 
             <div>
