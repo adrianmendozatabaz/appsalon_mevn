@@ -48,7 +48,7 @@ const formatter = ref({
             </div>
 
         </div>
-        <div class="flex justify-end">
+        <div class="flex justify-end" v-if="appointment.isValidReservation">
             <button class="w-full md:w-full-auto bg-blue-500 rounded-lg uppercase font-black text-white p-3">
                 Confirmar Reservación
             </button>
