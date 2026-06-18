@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import colors from "colors";
 import cors from 'cors';
 import servicesRoutes from "./routes/servicesRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import { db } from "./config/db.js";
 
 //* Variables
@@ -22,7 +23,8 @@ const whiteList = [process.env.FRONTEND_URL];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (whiteList.includes(origin)) {
+    // if (whiteList.includes(origin)) {
+    if (whiteList) {
       //* allow connection
       callback(null, true);
     } else {
@@ -36,6 +38,7 @@ app.use(cors(corsOptions));
 
 //* Route
 app.use("/api/services", servicesRoutes);
+app.use("/api/auth", authRoutes);
 
 //* Port
 const PORT = process.env.PORT || 4000;
