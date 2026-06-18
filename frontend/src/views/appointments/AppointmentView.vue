@@ -39,8 +39,8 @@ const disableDate = (date) => {
 
         <div class="lg:flex gap-5 items-start">
             <div class="w-full flex-1 bg-white flex justify-center rounded-lg">
-                <VueTailwindDatepicker i18n="es-mx" as-single no-input v-model="appointment.date"
-                    :formatter="formatter" :disable-date="disableDate" />
+                <VueTailwindDatepicker i18n="es-mx" as-single no-input v-model="appointment.date" :formatter="formatter"
+                    :disable-date="disableDate" />
             </div>
 
             <div class="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-5 mt-10 lg:mt-0">
@@ -54,7 +54,9 @@ const disableDate = (date) => {
 
         </div>
         <div class="flex justify-end" v-if="appointment.isValidReservation">
-            <button class="w-full md:w-full-auto bg-blue-500 rounded-lg uppercase font-black text-white p-3">
+            <button
+                class="w-full md:w-full-auto bg-blue-500 rounded-lg uppercase font-black text-white p-3 cursor-pointer"
+                @click="appointment.createAppointment">
                 Confirmar Reservación
             </button>
         </div>
