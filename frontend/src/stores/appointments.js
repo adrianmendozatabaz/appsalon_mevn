@@ -33,6 +33,15 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     }
   }
 
+  function createAppointment() {
+    const appointment = {
+      services: services.value.map(s => s._id),
+      date: date.value,
+      time: time.value,
+      totalAmount: totalAmount.value
+    }
+  }
+
   const isServiceSelected = computed(() => {
     return (id) => services.value.some((service) => service._id === id);
   });
@@ -49,6 +58,7 @@ export const useAppointmentsStore = defineStore("appointments", () => {
 
   return {
     onServiceSelected,
+    createAppointment,
     isServiceSelected,
     services,
     noServicesSelected,
