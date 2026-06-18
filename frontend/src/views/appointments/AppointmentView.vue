@@ -11,6 +11,11 @@ const formatter = ref({
     date: 'DD/MM/YYYY',
     month: 'MMM'
 })
+
+const disableDate = (date) => {
+    const today = new Date();
+    return date < today || date.getMonth() > today.getMonth() + 1 || [0, 6].includes(date.getDay());
+}
 </script>
 
 <template>
@@ -35,7 +40,7 @@ const formatter = ref({
         <div class="lg:flex gap-5 items-start">
             <div class="w-full flex-1 bg-white flex justify-center rounded-lg">
                 <VueTailwindDatepicker i18n="es-mx" as-single no-input v-model="appointment.date"
-                    :formatter="formatter" />
+                    :formatter="formatter" :disable-date="disableDate" />
             </div>
 
             <div class="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-5 mt-10 lg:mt-0">
