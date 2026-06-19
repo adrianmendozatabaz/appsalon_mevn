@@ -23,6 +23,16 @@ const register = async (req, res) => {
   }
 
   //* Validate extension password
+  const MIN_PASSWORD_LENGTH = 8;
+  if (password.trim().length < MIN_PASSWORD_LENGTH) {
+    const error = new Error(`La contraseña debe tener mínimo ${MIN_PASSWORD_LENGTH} caracteres.`);
+
+    return res.status(400).json({
+      msg: error.message,
+    });
+  }
+
+  //* Save user
   try {
     const user = User(req.body);
     await user.save();
