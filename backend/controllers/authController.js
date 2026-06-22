@@ -38,7 +38,9 @@ const register = async (req, res) => {
     const user = User(req.body);
     const result = await user.save();
 
-    sendEmailVerification();
+    const { name, email, token } = result;
+
+    sendEmailVerification({ name, email, token });
 
     res.json({
       msg: "El usuario se creo con éxito, revisa tu email.",
