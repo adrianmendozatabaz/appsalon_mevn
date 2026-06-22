@@ -64,7 +64,7 @@ const verifyAccount = async (req, res) => {
   //* Si el token es valido confirmar la cuenta
   try {
     user.verified = true;
-    user.token = '';
+    user.token = "";
     await user.save();
     res.json({ msg: "Usuario Confirmado Correctamente." });
   } catch (error) {
@@ -72,4 +72,22 @@ const verifyAccount = async (req, res) => {
   }
 };
 
-export { register, verifyAccount };
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  //* Comprobar que el usuario exista
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    const error = new Error("Hubo un error, el usuario no existe.");
+    return res.status(401).json({ msg: error.message });
+  }
+
+  //* Revisar si el usuario comprobó su cuenta
+  if (!user.verified) {
+    const error = new Error("Hubo un error, tu cuenta no ha sido confirmada.");
+    return res.status(401).json({ msg: error.message });
+  }
+  //* Comprobar el password
+};
+
+export { register, verifyAccount, login };
