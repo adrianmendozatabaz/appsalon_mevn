@@ -88,6 +88,12 @@ const login = async (req, res) => {
     return res.status(401).json({ msg: error.message });
   }
   //* Comprobar el password
+  if (await user.checkPassword(password)) {
+    res.json({ msg: "Usuario autenticado" });
+  } else {
+    const error = new Error("Hubo un error, la contraseña es incorrecta.");
+    return res.status(401).json({ msg: error.message });
+  }
 };
 
 export { register, verifyAccount, login };
