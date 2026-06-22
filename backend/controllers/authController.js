@@ -26,7 +26,9 @@ const register = async (req, res) => {
   //* Validate extension password
   const MIN_PASSWORD_LENGTH = 8;
   if (password.trim().length < MIN_PASSWORD_LENGTH) {
-    const error = new Error(`La contraseña debe tener mínimo ${MIN_PASSWORD_LENGTH} caracteres.`);
+    const error = new Error(
+      `La contraseña debe tener mínimo ${MIN_PASSWORD_LENGTH} caracteres.`,
+    );
 
     return res.status(400).json({
       msg: error.message,
@@ -50,4 +52,24 @@ const register = async (req, res) => {
   }
 };
 
-export { register };
+const verifyAccount = async (req, res) => {
+  const { token } = req.params;
+  const user = await User.findOne({ token });
+
+  if (!user) {
+    const error = new Error("Hubo un error, token no valido.");
+    return res.status(401).json({ msg: error.message });
+  }
+
+  //* Si el token es valido confirmar la cuenta
+  try {
+    user.verified = true;
+    user.token = '';
+    await user.save();
+    res.json({ msg: "Usuario Confirmado Correctamente." });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { register, verifyAccount };
