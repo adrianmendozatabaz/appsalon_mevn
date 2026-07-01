@@ -13,10 +13,22 @@
                 length: 'El nombre es muy corto'
             }" />
 
-        <FormKit type="email" name="email" label="Correo electrónico" placeholder="Ingresa tu correo" validation="required|email"
-            :validation-messages="{
+        <FormKit type="email" name="email" label="Correo electrónico" placeholder="Ingresa tu correo"
+            validation="required|email" :validation-messages="{
                 required: 'El correo electrónico es obligatorio',
-                length: 'El correo electrónico no es valido'
+                email: 'El correo electrónico no es valido'
+            }" />
+
+        <FormKit type="password" name="password" label="Contraseña" placeholder="Ingresa tu contraseña"
+            validation="required|length:8" :validation-messages="{
+                required: 'El correo electrónico es obligatorio',
+                length: 'La contraseña debe tener al menos 8 caracteres'
+            }" />
+
+        <FormKit type="password" name="password_confirm" label="Repite la contraseña"
+            placeholder="Repite tu contraseña" validation="required|confirm" :validation-messages="{
+                required: 'El correo electrónico es obligatorio',
+                confirm: 'Las contraseñas no son iguales'
             }" />
 
         <FormKit type="submit">Crear Cuenta</FormKit>
