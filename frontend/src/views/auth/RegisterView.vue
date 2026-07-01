@@ -1,8 +1,20 @@
 <script setup>
 import AuthApi from '@/api/AuthApi';
-const handleSubmit = async ({ password_confirm, ...data }) => {
+import { inject } from 'vue';
+
+const toast = inject('toast');
+toast.open({
+    message: 'desde vue'
+})
+
+const handleSubmit = async ({ password_confirm, ...formData }) => {
     try {
-        await AuthApi.register(data);
+        const { data } = await AuthApi.register(formData);
+
+        toast.open({
+            message: data.msg,
+            type: 'success'
+        })
     } catch (error) {
         console.log(error);
     }
