@@ -4,9 +4,6 @@ import { reset } from '@formkit/vue';
 import { inject } from 'vue';
 
 const toast = inject('toast');
-toast.open({
-    message: 'desde vue'
-})
 
 const handleSubmit = async ({ password_confirm, ...formData }) => {
     try {
@@ -18,7 +15,10 @@ const handleSubmit = async ({ password_confirm, ...formData }) => {
         })
         reset('registerForm');
     } catch (error) {
-        console.log(error);
+        toast.open({
+            message: error.response.data.msg,
+            type: 'success'
+        })
     }
 }
 </script>
@@ -27,8 +27,8 @@ const handleSubmit = async ({ password_confirm, ...formData }) => {
     <h1 class="text-6xl font-extrabold text-white text-center mt-10">Crea una cuenta</h1>
     <p class="text-2xl text-white text-center my-5">Crea una cuenta en AppSalon</p>
 
-    <FormKit id="registerForm" type="form" :actions="false" incomplete-message="No se puede enviar, revisa las notificaciones"
-        @submit="handleSubmit">
+    <FormKit id="registerForm" type="form" :actions="false"
+        incomplete-message="No se puede enviar, revisa las notificaciones" @submit="handleSubmit">
         <FormKit type="text" name="name" label="Nombre" placeholder="Ingresa tu nombre" validation="required|length:3"
             :validation-messages="{
                 required: 'El nombre es obligatorio',
