@@ -16,7 +16,7 @@ export async function sendEmailVerification({ name, email, token }) {
     text: "AppSalon - Confirma tu cuenta",
     html: `<p>Hola: ${name}, confirma tu cuenta en AppSalon</p>
        <p>Tu cuenta esta casi lista, solo debes confirmarla en el siguiente enlace</p> 
-       <a href="${process.env.FRONTEND_URL}/api/auth/confirmar-cuenta/${token}">Confirmar Cuenta</a> 
+       <a href="${process.env.FRONTEND_URL}/auth/confirmar-cuenta/${token}">Confirmar Cuenta</a> 
        <p>Si tu no creaste esta cuenta, puedes ignorar este mensaje</p> 
       `,
   });
