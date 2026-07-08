@@ -1,13 +1,16 @@
 <script setup>
 import { inject } from 'vue';
 import AuthAPI from '@/api/AuthAPI';
+import { useRouter } from 'vue-router';
 
 const toast = inject('toast');
+const router = useRouter();
 
 const handleSubmit = async (formData) => {
     try {
         const { data: { token } } = await AuthAPI.login(formData);
         localStorage.setItem('AUTH_TOKEN', token);
+        router.push({ name: 'my-appointments' });
     } catch (error) {
         toast.open({
             message: error.response.data.msg,
