@@ -100,4 +100,8 @@ const login = async (req, res) => {
   }
 };
 
-export { register, verifyAccount, login };
+const user = async (req, res) => {
+  console.log("user");
+};
+
+export { register, verifyAccount, login, user };
