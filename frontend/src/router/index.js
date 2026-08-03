@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import AppointmentsLayout from "@/views/appointments/AppointmentsLayout.vue";
+import AuthAPI from "@/api/AuthAPI.js";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -71,8 +72,10 @@ router.beforeEach(async (to, from, next) => {
 
   if (requiresAuth) {
     try {
+      await AuthAPI.auth();
+      next();
     } catch (error) {
-      console.log(error);
+      next({ name: "login" });
     }
   } else {
     next();
