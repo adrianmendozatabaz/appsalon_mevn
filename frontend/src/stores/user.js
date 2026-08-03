@@ -1,8 +1,10 @@
 import { defineStore } from "pinia";
 import { computed, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 import AuthAPI from "@/api/AuthAPI";
 
 export const useUserStore = defineStore("user", () => {
+  const router = useRouter();
   const user = ref({});
 
   onMounted(async () => {
@@ -14,6 +16,12 @@ export const useUserStore = defineStore("user", () => {
     }
   });
 
+  function logout() {
+    localStorage.removeItem("AUTH_TOKEN");
+    user.value = {};
+    router.push({ name: "login" });
+  }
+
   const getUserName = computed(() =>
     user.value?.name ? user.value?.name : "",
   );
@@ -21,5 +29,6 @@ export const useUserStore = defineStore("user", () => {
   return {
     user,
     getUserName,
+    logout,
   };
 });
