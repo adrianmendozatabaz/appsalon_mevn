@@ -1,6 +1,11 @@
+import Appointment from "../models/Appointment.js";
+
 const createAppointment = async (req, res) => {
+  const appointment = req.body;
+  appointment.user = req.user._id.toString();
   try {
-    console.log("dessde create");
+    const newAppointment = new Appointment(appointment);
+    await newAppointment.save();
   } catch (error) {
     console.log(error);
   }
