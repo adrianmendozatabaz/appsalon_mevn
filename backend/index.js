@@ -4,6 +4,7 @@ import colors from "colors";
 import cors from 'cors';
 import servicesRoutes from "./routes/servicesRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import appointmentRoutes from "./routes/appointmentRoutes.js"
 import { db } from "./config/db.js";
 
 //* Variables
@@ -39,6 +40,7 @@ app.use(cors(corsOptions));
 //* Route
 app.use("/api/services", servicesRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/appointments", appointmentRoutes);
 
 //* Port
 const PORT = process.env.PORT || 4000;
