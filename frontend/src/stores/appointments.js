@@ -1,19 +1,20 @@
 import { defineStore } from "pinia";
 import { computed, onMounted, ref } from "vue";
+import AppointmentApi from "@/api/AppointmentApi";
 
 export const useAppointmentsStore = defineStore("appointments", () => {
   const services = ref([]);
-  const date = ref('');
+  const date = ref("");
   const hours = ref([]);
-  const time = ref('');
+  const time = ref("");
 
   onMounted(() => {
     const startHour = 10;
     const endHour = 19;
-    for (let hour = startHour; hour <= endHour; hour++){
-      hours.value.push(hour + ':00');
+    for (let hour = startHour; hour <= endHour; hour++) {
+      hours.value.push(hour + ":00");
     }
-  })
+  });
 
   function onServiceSelected(service) {
     if (
@@ -33,13 +34,15 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     }
   }
 
-  function createAppointment() {
+  async function createAppointment() {
     const appointment = {
-      services: services.value.map(s => s._id),
+      services: services.value.map((s) => s._id),
       date: date.value,
       time: time.value,
-      totalAmount: totalAmount.value
-    }
+      totalAmount: totalAmount.value,
+    };
+
+    await AppointmentApi.create(appointment);
   }
 
   const isServiceSelected = computed(() => {
@@ -53,8 +56,8 @@ export const useAppointmentsStore = defineStore("appointments", () => {
   });
 
   const isValidReservation = computed(() => {
-    return services.value.length && date.value.length && time.value.length
-  })
+    return services.value.length && date.value.length && time.value.length;
+  });
 
   return {
     onServiceSelected,
@@ -66,6 +69,6 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     date,
     hours,
     time,
-    isValidReservation
+    isValidReservation,
   };
 });
