@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, onMounted, ref } from "vue";
 import AppointmentApi from "@/api/AppointmentApi";
+import { convertToISO } from "@/helpers/date";
 
 export const useAppointmentsStore = defineStore("appointments", () => {
   const services = ref([]);
@@ -37,12 +38,13 @@ export const useAppointmentsStore = defineStore("appointments", () => {
   async function createAppointment() {
     const appointment = {
       services: services.value.map((s) => s._id),
-      date: date.value,
+      date: convertToISO(date.value),
       time: time.value,
       totalAmount: totalAmount.value,
     };
 
-    await AppointmentApi.create(appointment);
+    const { data } = await AppointmentApi.create(appointment);
+    console.log(data);
   }
 
   const isServiceSelected = computed(() => {
