@@ -9,7 +9,7 @@ const createAppointment = async (req, res) => {
     await newAppointment.save();
 
     res.json({
-      msg: "Cita almacenada correctamente.",
+      msg: "Tu reservación se realizo correctamente.",
     });
   } catch (error) {
     console.log(error);
