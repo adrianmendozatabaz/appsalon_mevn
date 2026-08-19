@@ -45,9 +45,9 @@ const disableDate = (date) => {
 
             <div v-if="appointment.isDateSelected" class="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-5 mt-10 lg:mt-0">
                 <button v-for="hour in appointment.hours"
-                    class="block text-blue-500 rounded-lg text-xl font-black p-3 cursor-pointer"
+                    class="block text-blue-500 rounded-lg text-xl font-black p-3 cursor-pointer disabled:opacity-10"
                     :class="appointment.time === hour ? 'bg-blue-500 text-white' : 'bg-white'"
-                    @click="appointment.time = hour">
+                    @click="appointment.time = hour" :disabled="appointment.disableTime(hour) ? true : false">
                     {{ hour }}
                 </button>
             </div>
