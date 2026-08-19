@@ -1,11 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 import colors from "colors";
-import cors from 'cors';
+import cors from "cors";
 import servicesRoutes from "./routes/servicesRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
-import appointmentRoutes from "./routes/appointmentRoutes.js"
+import appointmentRoutes from "./routes/appointmentRoutes.js";
 import { db } from "./config/db.js";
+import userRoutes from "./routes/userRoutes.js";
 
 //* Variables
 dotenv.config();
@@ -30,8 +31,8 @@ const corsOptions = {
       callback(null, true);
     } else {
       //* Not allow connection
-      callback(new Error('Error de CORS'));
-    }   
+      callback(new Error("Error de CORS"));
+    }
   },
 };
 
@@ -41,6 +42,7 @@ app.use(cors(corsOptions));
 app.use("/api/services", servicesRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/appointments", appointmentRoutes);
+app.use("/api/users", userRoutes);
 
 //* Port
 const PORT = process.env.PORT || 4000;
