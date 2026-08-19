@@ -5,6 +5,6 @@ export default {
     return api.post("/appointments", data);
   },
   getByDate(date) {
-    return api.post(`/appointments?date=${date}`);
+    return api.get(`/appointments?date=${date}`);
   },
 };
