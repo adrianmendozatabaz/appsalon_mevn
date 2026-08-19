@@ -11,6 +11,7 @@ export const useAppointmentsStore = defineStore("appointments", () => {
   const time = ref("");
   const toast = inject("toast");
   const router = useRouter();
+  const appointmentsByDate = ref([]);
 
   onMounted(() => {
     const startHour = 10;
@@ -21,10 +22,11 @@ export const useAppointmentsStore = defineStore("appointments", () => {
   });
 
   watch(date, async () => {
+    if (date.value === "") return;
+
     const { data } = await AppointmentApi.getByDate(date.value);
-    console.log(data);
-    
-  })
+    appointmentsByDate.value = data;
+  });
 
   function onServiceSelected(service) {
     if (
@@ -91,6 +93,14 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     return date.value ? true : false;
   });
 
+  const disableTime = computed(() => {
+    return (hour) => {
+      return appointmentsByDate.value.find(
+        (appointment) => appointment.time === hour,
+      );
+    };
+  });
+
   return {
     onServiceSelected,
     createAppointment,
@@ -103,5 +113,6 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     time,
     isValidReservation,
     isDateSelected,
+    disableTime,
   };
 });
