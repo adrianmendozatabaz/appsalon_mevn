@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { computed, inject, onMounted, ref } from "vue";
+import { computed, inject, onMounted, ref, watch } from "vue";
 import { convertToISO } from "@/helpers/date";
 import { useRouter } from "vue-router";
 import AppointmentApi from "@/api/AppointmentApi";
@@ -19,6 +19,12 @@ export const useAppointmentsStore = defineStore("appointments", () => {
       hours.value.push(hour + ":00");
     }
   });
+
+  watch(date, async () => {
+    const { data } = await AppointmentApi.getByDate(date.value);
+    console.log(data);
+    
+  })
 
   function onServiceSelected(service) {
     if (
@@ -81,6 +87,10 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     return services.value.length && date.value.length && time.value.length;
   });
 
+  const isDateSelected = computed(() => {
+    return date.value ? true : false;
+  });
+
   return {
     onServiceSelected,
     createAppointment,
@@ -92,5 +102,6 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     hours,
     time,
     isValidReservation,
+    isDateSelected,
   };
 });
