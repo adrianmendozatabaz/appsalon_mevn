@@ -1,7 +1,19 @@
 <script setup>
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
+
+const { id } = route.params;
+
+onMounted(() => {
+    try {
+        console.log(id);
+
+    } catch (error) {
+        console.log(error);
+    }
+})
 </script>
 
 <template>
