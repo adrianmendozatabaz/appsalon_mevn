@@ -52,6 +52,12 @@ const getAppointmentById = async (req, res) => {
     return handleNotFoundError("La cita no existe.", res);
   }
 
+  if (appointment.user.toString() !== req.user._id.toString()) {
+    const error = new Error("No tienes los permisos");
+
+    return res.status(403).json({ msg: error.message });
+  }
+
   res.json(appointment);
 };
 
