@@ -38,4 +38,8 @@ const getAppointmentsByDate = async (req, res) => {
   res.json(appointments);
 };
 
-export { createAppointment, getAppointmentsByDate };
+const getAppointmentById = async (req, res) => {
+  console.log(req.params.id);
+};
+
+export { createAppointment, getAppointmentsByDate, getAppointmentById };
