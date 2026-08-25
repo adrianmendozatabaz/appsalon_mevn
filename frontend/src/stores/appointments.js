@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { computed, inject, onMounted, ref, watch } from "vue";
-import { convertToISO } from "@/helpers/date";
+import { convertToISO, convertToDDMMYYYY } from "@/helpers/date";
 import { useRouter } from "vue-router";
 import AppointmentApi from "@/api/AppointmentApi";
 
@@ -32,6 +32,8 @@ export const useAppointmentsStore = defineStore("appointments", () => {
   function setSelectedAppointment(appointment) {
     console.log(appointment);
     services.value = appointment.services;
+    date.value = convertToDDMMYYYY(appointment.date);
+    time.value = appointment.time;
   }
 
   function onServiceSelected(service) {
