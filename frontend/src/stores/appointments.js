@@ -29,6 +29,11 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     appointmentsByDate.value = data;
   });
 
+  function setSelectedAppointment(appointment) {
+    console.log(appointment);
+    services.value = appointment.services;
+  }
+
   function onServiceSelected(service) {
     if (
       services.value.some(
@@ -105,6 +110,7 @@ export const useAppointmentsStore = defineStore("appointments", () => {
   return {
     onServiceSelected,
     createAppointment,
+    setSelectedAppointment,
     isServiceSelected,
     services,
     noServicesSelected,
