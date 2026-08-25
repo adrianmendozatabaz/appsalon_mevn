@@ -46,7 +46,7 @@ const getAppointmentById = async (req, res) => {
   if (validateObjectId(id, res)) return;
 
   //* Valide exists
-  const appointment = await Appointment.findById(id).populate('services');
+  const appointment = await Appointment.findById(id).populate("services");
 
   if (!appointment) {
     return handleNotFoundError("La cita no existe.", res);
@@ -61,4 +61,45 @@ const getAppointmentById = async (req, res) => {
   res.json(appointment);
 };
 
-export { createAppointment, getAppointmentsByDate, getAppointmentById };
+const updateAppointment = async (req, res) => {
+  const { id } = req.params;
+
+  //* Validate object id
+  if (validateObjectId(id, res)) return;
+
+  //* Valide exists
+  const appointment = await Appointment.findById(id).populate("services");
+
+  if (!appointment) {
+    return handleNotFoundError("La cita no existe.", res);
+  }
+
+  if (appointment.user.toString() !== req.user._id.toString()) {
+    const error = new Error("No tienes los permisos");
+
+    return res.status(403).json({ msg: error.message });
+  }
+
+  const { date, time, totalAmount, services } = req.body;
+  appointment.date = date;
+  appointment.time = time;
+  appointment.totalAmount = totalAmount;
+  appointment.services = services;
+
+  try {
+    const result = await appointment.save();
+
+    res.json({
+      msg: 'Cita actualizada correctamente'
+    })
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export {
+  createAppointment,
+  getAppointmentsByDate,
+  getAppointmentById,
+  updateAppointment,
+};
