@@ -85,18 +85,18 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, from) => {
   const requiresAuth = to.matched.some((url) => url.meta.requiresAuth);
 
   if (requiresAuth) {
     try {
       await AuthAPI.auth();
-      next();
+      return true;
     } catch (error) {
-      next({ name: "login" });
+      return { name: "login" };
     }
   } else {
-    next();
+    return true;
   }
 });
 
