@@ -1,6 +1,10 @@
 import Appointment from "../models/Appointment.js";
 import { parse, formatISO, startOfDay, endOfDay, isValid } from "date-fns";
-import { handleNotFoundError, validateObjectId } from "../utils/index.js";
+import {
+  handleNotFoundError,
+  validateObjectId,
+  formatDate,
+} from "../utils/index.js";
 import { sendEmailNewAppointment } from "../emails/appointmentEmailService.js";
 
 const createAppointment = async (req, res) => {
@@ -12,7 +16,7 @@ const createAppointment = async (req, res) => {
     const result = await newAppointment.save();
 
     await sendEmailNewAppointment({
-      date: result.date,
+      date: formatDate(result.date),
       time: result.time,
     });
 
