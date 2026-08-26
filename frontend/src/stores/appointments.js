@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
 import { computed, inject, onMounted, ref, watch } from "vue";
 import { convertToISO, convertToDDMMYYYY } from "@/helpers/date";
-import { useRouter } from "vue-router";
 import AppointmentApi from "@/api/AppointmentApi";
+import { useRouter } from "vue-router";
+import { useUserStore } from "./user";
 
 export const useAppointmentsStore = defineStore("appointments", () => {
   const appointmentId = ref("");
@@ -13,6 +14,7 @@ export const useAppointmentsStore = defineStore("appointments", () => {
   const toast = inject("toast");
   const router = useRouter();
   const appointmentsByDate = ref([]);
+  const user = useUserStore();
 
   onMounted(() => {
     const startHour = 10;
@@ -74,22 +76,40 @@ export const useAppointmentsStore = defineStore("appointments", () => {
       totalAmount: totalAmount.value,
     };
 
-    try {
-      const { data } = await AppointmentApi.create(appointment);
+    if (appointmentId.value) {
+      try {
+        const { data } = await AppointmentApi.update(
+          appointmentId.value,
+          appointment,
+        );
 
-      toast.open({
-        message: data.msg,
-        type: "success",
-      });
+        toast.open({
+          message: data.msg,
+          type: "success",
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const { data } = await AppointmentApi.create(appointment);
 
-      clearAppointmentData();
-      router.push({ name: "my-appointments" });
-    } catch (error) {
-      console.log(error);
+        toast.open({
+          message: data.msg,
+          type: "success",
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
+
+    clearAppointmentData();
+    user.getUserAppointments();
+    router.push({ name: "my-appointments" });
   }
 
   function clearAppointmentData() {
+    appointmentId.value = "";
     services.value = [];
     date.value = "";
     time.value = "";
