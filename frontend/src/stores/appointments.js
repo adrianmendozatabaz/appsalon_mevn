@@ -145,6 +145,7 @@ export const useAppointmentsStore = defineStore("appointments", () => {
     onServiceSelected,
     createAppointment,
     setSelectedAppointment,
+    clearAppointmentData,
     isServiceSelected,
     services,
     noServicesSelected,
