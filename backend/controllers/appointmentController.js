@@ -5,7 +5,7 @@ import {
   validateObjectId,
   formatDate,
 } from "../utils/index.js";
-import { sendEmailNewAppointment } from "../emails/appointmentEmailService.js";
+import { sendEmailNewAppointment, sendEmailUpdateAppointment} from "../emails/appointmentEmailService.js";
 
 const createAppointment = async (req, res) => {
   const appointment = req.body;
@@ -98,6 +98,11 @@ const updateAppointment = async (req, res) => {
 
   try {
     const result = await appointment.save();
+
+    await sendEmailUpdateAppointment({
+      date: formatDate(result.date),
+      time: result.time,
+    });
 
     res.json({
       msg: "Cita actualizada correctamente",
