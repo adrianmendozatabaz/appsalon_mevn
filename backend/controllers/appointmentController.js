@@ -5,7 +5,11 @@ import {
   validateObjectId,
   formatDate,
 } from "../utils/index.js";
-import { sendEmailNewAppointment, sendEmailUpdateAppointment} from "../emails/appointmentEmailService.js";
+import {
+  sendEmailNewAppointment,
+  sendEmailUpdateAppointment,
+  sendEmailCancelAppointment,
+} from "../emails/appointmentEmailService.js";
 
 const createAppointment = async (req, res) => {
   const appointment = req.body;
@@ -133,6 +137,11 @@ const deleteAppointment = async (req, res) => {
 
   try {
     await appointment.deleteOne();
+
+    await sendEmailCancelAppointment({
+      date: formatDate(appointment.date),
+      time: appointment.time,
+    });
 
     res.json({
       msg: "Cita cancelada correctamente",
