@@ -43,3 +43,25 @@ export async function sendEmailUpdateAppointment({ date, time }) {
 
   console.log("res", info.messageId);
 }
+
+export async function sendEmailCancelAppointment({ date, time }) {
+  const transporter = createTransport(
+    process.env.EMAIL_HOST,
+    process.env.EMAIL_PORT,
+    process.env.EMAIL_USER,
+    process.env.EMAIL_PASS,
+  );
+
+  //* Enviar email
+  const info = await transporter.sendMail({
+    from: "AppSalon <citas@appsalon.com>",
+    to: 'admin@appsalon.com',
+    subject: "AppSalon - Cita cancelada",
+    text: "AppSalon - Cita cancelada",
+    html: `<p>Hola: un usuario ha cancelado su cita</p>
+       <p>La cita del dia ${date} a las ${time} horas ha sido cancelada.</p> 
+      `,
+  });
+
+  console.log("res", info.messageId);
+}
