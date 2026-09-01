@@ -43,13 +43,13 @@ const handleSubmit = async ({ password_confirm, ...formData }) => {
 
         <FormKit type="password" name="password" label="Contraseña" placeholder="Ingresa tu contraseña"
             validation="required|length:8" :validation-messages="{
-                required: 'El correo electrónico es obligatorio',
+                required: 'La contraseña es obligatoria',
                 length: 'La contraseña debe tener al menos 8 caracteres'
             }" />
 
         <FormKit type="password" name="password_confirm" label="Repite la contraseña" placeholder="Repite tu contraseña"
             validation="required|confirm" :validation-messages="{
-                required: 'El correo electrónico es obligatorio',
+                required: 'La contraseña es obligatoria',
                 confirm: 'Las contraseñas no son iguales'
             }" />
 
