@@ -16,7 +16,7 @@ router.post("/register", register);
 router.get("/verify/:token", verifyAccount);
 router.post("/login", login);
 router.post("/forgot-password", forgotPassword);
-router.post("/forgot-password/:token")
+router.route("/forgot-password/:token")
   .get(verifyPasswordResetToken)
   .post(updatePassword);
 
