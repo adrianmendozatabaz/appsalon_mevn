@@ -134,4 +134,25 @@ const user = async (req, res) => {
   res.json(user);
 };
 
-export { register, verifyAccount, login, user, forgotPassword };
+const verifyPasswordResetToken = async (req, res) => {
+  const { token } = req.params;
+
+  const isValidToken = await User.findOne({ token });
+
+  if (!isValidToken) {
+    const error = new Error("Hubo un error, el token no es valido.");
+    res.status(404).json({ msg: error.message });
+  }
+};
+
+const updatePassword = async (req, res) => {};
+
+export {
+  register,
+  verifyAccount,
+  login,
+  user,
+  forgotPassword,
+  verifyPasswordResetToken,
+  updatePassword,
+};
