@@ -141,8 +141,8 @@ const verifyPasswordResetToken = async (req, res) => {
 
   if (!isValidToken) {
     const error = new Error("Hubo un error, el token no es valido.");
-    res.status(404).json({ msg: error.message });
-  }
+    return res.status(404).json({ msg: error.message });
+  }  
 };
 
 const updatePassword = async (req, res) => {};
