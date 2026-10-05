@@ -23,3 +23,27 @@ export async function sendEmailVerification({ name, email, token }) {
 
   console.log("res", info.messageId);
 }
+
+export async function sendEmailPasswordReset({ name, email, token }) {
+  const transporter = createTransport(
+    process.env.EMAIL_HOST,
+    process.env.EMAIL_PORT,
+    process.env.EMAIL_USER,
+    process.env.EMAIL_PASS,
+  );
+
+  //* Enviar email
+  const info = await transporter.sendMail({
+    from: "AppSalon <cuentas@appsalon.com>",
+    to: email,
+    subject: "AppSalon - restablece tu contraseña",
+    text: "AppSalon - restablece tu contraseña",
+    html: `<p>Hola: ${name}, has solicitado restablecer tu contraseña</p>
+       <p>Sigue el siguiente enlace para restablecer tu contraseña</p> 
+       <a href="${process.env.FRONTEND_URL}/auth/olvide-password/${token}">Restablecer Contraseña</a> 
+       <p>Si tu no solicitaste este cambio, puedes ignorar este mensaje</p> 
+      `,
+  });
+
+  console.log("res", info.messageId);
+}
