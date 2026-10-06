@@ -134,6 +134,17 @@ const user = async (req, res) => {
   res.json(user);
 };
 
+const admin = async (req, res) => {
+  const { user } = req;
+
+  if (!user.admin) {
+    const error = new Error("Acceso denegado.");
+    return res.status(403).json({ msg: error.message });
+  }
+
+  res.json(user);
+};
+
 const verifyPasswordResetToken = async (req, res) => {
   const { token } = req.params;
 
@@ -178,4 +189,5 @@ export {
   forgotPassword,
   verifyPasswordResetToken,
   updatePassword,
+  admin,
 };
