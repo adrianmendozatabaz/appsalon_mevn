@@ -142,10 +142,31 @@ const verifyPasswordResetToken = async (req, res) => {
   if (!isValidToken) {
     const error = new Error("Hubo un error, el token no es valido.");
     return res.status(404).json({ msg: error.message });
-  }  
+  }
 };
 
-const updatePassword = async (req, res) => {};
+const updatePassword = async (req, res) => {
+  const { token } = req.params;
+
+  const isValidToken = await User.findOne({ token });
+
+  if (!isValidToken) {
+    const error = new Error("Hubo un error, el token no es valido.");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  const { password } = req.body;
+
+  try {
+    user.token = "";
+    user.password = password;
+    await user.save();
+
+    res.json({ msg: "Contraseña modificada correctamente." });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export {
   register,
