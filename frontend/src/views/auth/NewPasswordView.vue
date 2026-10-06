@@ -1,20 +1,18 @@
 <script setup>
 import { onMounted, inject, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import AuthAPI from '@/api/AuthAPI';
 
 const toast = inject('toast');
 const route = useRoute();
+const router = useRouter();
 const { token } = route.params;
 const validToken = ref(false);
 
 onMounted(async () => {
     try {
-        validToken.value = true;
         const { data } = await AuthAPI.verifyPasswordResetToken(token);
-
-        console.log(validToken);
-        
+        validToken.value = true;
     } catch (error) {
         toast.open({
             message: error.response.data.msg,
@@ -23,10 +21,24 @@ onMounted(async () => {
     }
 });
 
-const handleSubmit = async({password}) => {
-    console.log(password);
-    
-}
+const handleSubmit = async ({ password }) => {
+    try {
+        const { data } = await AuthAPI.updatePassword(token, { password });
+        toast.open({
+            message: data.msg,
+            type: 'success'
+        })
+
+        setTimeout(() => {
+            router.push({ name: 'login' });
+        }, 2500);
+    } catch (error) {
+        toast.open({
+            message: error.response.data.msg,
+            type: 'error'
+        })
+    }
+};
 
 </script>
 
