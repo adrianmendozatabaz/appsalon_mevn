@@ -9,12 +9,20 @@ const getUserAppointments = async (req, res) => {
   }
 
   try {
-    const appointments = await Appointment.find({
-      user,
-      date: {
-        $gte: new Date(),
-      },
-    })
+    const query = req.user.admin
+      ? {
+          date: {
+            $gte: new Date(),
+          },
+        }
+      : {
+          user,
+          date: {
+            $gte: new Date(),
+          },
+        };
+
+    const appointments = await Appointment.find(query)
       .populate("services")
       .sort({ date: "asc" });
 
