@@ -16,8 +16,8 @@ defineProps({
         </p>
 
         <p class="text-gray-500 font-black">
-            Nombre Cliente: <span class="font-light"> </span>
-            Email: <span class="font-light"> </span>
+            Nombre Cliente: <span class="font-light"> {{ appointment.user.name }} </span>
+            Email: <span class="font-light"> {{ appointment.user.email }} </span>
         </p>
 
         <p class="text-lg font-black">Servicios Solicitados en la cita</p>
